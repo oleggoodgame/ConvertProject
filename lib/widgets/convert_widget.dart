@@ -2,9 +2,10 @@ import 'package:convertor/model/currency.dart';
 import 'package:convertor/providers/convert_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 class ConvertWidget extends ConsumerWidget {
-  final StateProvider<String> type_ref1;
+  final AutoDisposeNotifierProviderImpl<dynamic, String> type_ref1;
   final AutoDisposeNotifierProvider<dynamic, String> type_ref2;
 
   ConvertWidget(this.type_ref1, this.type_ref2, {super.key});

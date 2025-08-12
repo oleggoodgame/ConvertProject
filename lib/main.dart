@@ -30,9 +30,9 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
     return Scaffold(
       body: Column(
         children: [
-          ConvertWidget(convertProvider_1, amountProviderProvider),
+          ConvertWidget(convertFromProvider, amountProviderProvider),
           const SizedBox(height: 14),
-          ConvertWidget(convertProvider_2, resultProvider),
+          ConvertWidget(convertToProvider, resultProvider),
           const Spacer(),
           const GridViewWidget(),
         ],

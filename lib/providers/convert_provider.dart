@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:convertor/model/currency.dart';
 import 'package:convertor/request/convert_request.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -45,24 +47,41 @@ class AmountProvider extends _$AmountProvider {
     }
   }
 }
+
+@riverpod
+class ConvertFrom extends _$ConvertFrom {
+  @override
+  String build() => 'UAH';
+  void change(String newValue) => state = newValue;
+}
+
+@riverpod
+class ConvertTo extends _$ConvertTo {
+  @override
+  String build() => 'UAH';
+  void change(String newValue) => state = newValue;
+}
+
 @riverpod
 class Result extends _$Result {
+  Timer? _debounce;
+
   @override
   String build() => '0';
 
-  Future<void> update({
+  void onAmountChanged({
     required String from,
     required String to,
     required String amount,
-  }) async {
-    // state = '...loading';
-    try {
+  }) {
+    _debounce?.cancel();
+    _debounce = Timer(const Duration(milliseconds: 500), () async {
       final result = await convert_data(from, to, amount);
-      state = result;
-    } catch (e) {
-      state = 'Error: $e';
-    }
+      state = result; // Тут має оновитися стан
+    });
   }
+}
+
   // void add(String num) {
   //   if (state == '0') {
   //     state = num;
@@ -71,14 +90,11 @@ class Result extends _$Result {
   //   }
   // }
 
-  // void remove() {
-  //   if (state.isEmpty || state.length == 1) {
-  //     state = '0';
-  //   } else {
-  //     state = state.substring(0, state.length - 1);
-  //   }
+  //   // void remove() {
+  //   //   if (state.isEmpty || state.length == 1) {
+  //   //     state = '0';
+  //   //   } else {
+  //   //     state = state.substring(0, state.length - 1);
+  //   //   }
+  //   // }
   // }
-}
-
-final convertProvider_1 = StateProvider<String>((ref) => "UAH");
-final convertProvider_2 = StateProvider<String>((ref) => "UAH");

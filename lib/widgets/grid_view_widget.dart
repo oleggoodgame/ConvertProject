@@ -4,162 +4,46 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class GridViewWidget extends ConsumerWidget {
-  // треба створити клас buttons як номер телефону допустим вводити, АЛЕ я хочу щоб справа знизу у мене була Іконка, тобто мені підійде просто String від 0-9 і . Але я хочу додати іконку, як це найкращее реалізувати?
   const GridViewWidget({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final buttons = ['9', '8', '7', '6', '5', '4', '3', '2', '1', '.', '0'];
+
     return GridView.count(
       crossAxisCount: 3,
       childAspectRatio: 1.2,
-
       shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
       children: [
-        CardButton(
-          label: '9',
-          onTap: () {
-            ref.read(amountProviderProvider.notifier).add('9');
-            ref
-                .read(resultProvider.notifier)
-                .update(
-                  from: ref.read(convertProvider_1),
-                  to: ref.read(convertProvider_2),
-                  amount: ref.read(amountProviderProvider),
-                );
-          },
+        // кнопки з цифрами та крапкою
+        ...buttons.map(
+          (label) => CardButton(
+            label: label,
+            onTap: () {
+              if (label == '.') {
+                ref.read(amountProviderProvider.notifier).addPoint();
+              } else {
+                ref.read(amountProviderProvider.notifier).add(label);
+              }
+
+              ref.read(resultProvider.notifier).onAmountChanged(
+                    from: ref.read(convertFromProvider),
+                    to: ref.read(convertToProvider),
+                    amount: ref.read(amountProviderProvider),
+                  );
+            },
+          ),
         ),
-        CardButton(
-          label: '8',
-          onTap: () {
-            ref.read(amountProviderProvider.notifier).add('8');
-            ref
-                .read(resultProvider.notifier)
-                .update(
-                  from: ref.read(convertProvider_1),
-                  to: ref.read(convertProvider_2),
-                  amount: ref.read(amountProviderProvider),
-                );
-          },
-        ),
-        CardButton(
-          label: '7',
-          onTap: () {
-            ref.read(amountProviderProvider.notifier).add('7');
-            ref
-                .read(resultProvider.notifier)
-                .update(
-                  from: ref.read(convertProvider_1),
-                  to: ref.read(convertProvider_2),
-                  amount: ref.read(amountProviderProvider),
-                );
-          },
-        ),
-        CardButton(
-          label: '6',
-          onTap: () {
-            ref.read(amountProviderProvider.notifier).add('6');
-            ref
-                .read(resultProvider.notifier)
-                .update(
-                  from: ref.read(convertProvider_1),
-                  to: ref.read(convertProvider_2),
-                  amount: ref.read(amountProviderProvider),
-                );
-          },
-        ),
-        CardButton(
-          label: '5',
-          onTap: () {
-            ref.read(amountProviderProvider.notifier).add('5');
-            ref
-                .read(resultProvider.notifier)
-                .update(
-                  from: ref.read(convertProvider_1),
-                  to: ref.read(convertProvider_2),
-                  amount: ref.read(amountProviderProvider),
-                );
-          },
-        ),
-        CardButton(
-          label: '4',
-          onTap: () {
-            ref.read(amountProviderProvider.notifier).add('4');
-            ref
-                .read(resultProvider.notifier)
-                .update(
-                  from: ref.read(convertProvider_1),
-                  to: ref.read(convertProvider_2),
-                  amount: ref.read(amountProviderProvider),
-                );
-          },
-        ),
-        CardButton(
-          label: '3',
-          onTap: () {
-            ref.read(amountProviderProvider.notifier).add('3');
-            ref
-                .read(resultProvider.notifier)
-                .update(
-                  from: ref.read(convertProvider_1),
-                  to: ref.read(convertProvider_2),
-                  amount: ref.read(amountProviderProvider),
-                );
-          },
-        ),
-        CardButton(
-          label: '2',
-          onTap: () {
-            ref.read(amountProviderProvider.notifier).add('2');
-            ref
-                .read(resultProvider.notifier)
-                .update(
-                  from: ref.read(convertProvider_1),
-                  to: ref.read(convertProvider_2),
-                  amount: ref.read(amountProviderProvider),
-                );
-          },
-        ),
-        CardButton(
-          label: '1',
-          onTap: () {
-            ref.read(amountProviderProvider.notifier).add('1');
-            ref
-                .read(resultProvider.notifier)
-                .update(
-                  from: ref.read(convertProvider_1),
-                  to: ref.read(convertProvider_2),
-                  amount: ref.read(amountProviderProvider),
-                );
-          },
-        ),
-        CardButton(
-          label: '.',
-          onTap: () {
-            ref.read(amountProviderProvider.notifier).addPoint();
-          },
-        ),
-        CardButton(
-          label: '0',
-          onTap: () {
-            ref.read(amountProviderProvider.notifier).add('0');
-            ref
-                .read(resultProvider.notifier)
-                .update(
-                  from: ref.read(convertProvider_1),
-                  to: ref.read(convertProvider_2),
-                  amount: ref.read(amountProviderProvider),
-                );
-          },
-        ),
+
+        // кнопка видалення
         CardButton(
           icon: Icons.backspace,
           onTap: () {
             ref.read(amountProviderProvider.notifier).remove();
-            ref
-                .read(resultProvider.notifier)
-                .update(
-                  from: ref.read(convertProvider_1),
-                  to: ref.read(convertProvider_2),
+            ref.read(resultProvider.notifier).onAmountChanged(
+                  from: ref.read(convertFromProvider),
+                  to: ref.read(convertToProvider),
                   amount: ref.read(amountProviderProvider),
                 );
           },

@@ -41,7 +41,39 @@ final amountProviderProvider =
     );
 
 typedef _$AmountProvider = AutoDisposeNotifier<String>;
-String _$resultHash() => r'cfeac221f0d286d6a5791d71c76b6fa1ecf0d668';
+String _$convertFromHash() => r'b3f5a38fb3da01685efc3d36482fa0a15cc5d3b6';
+
+/// See also [ConvertFrom].
+@ProviderFor(ConvertFrom)
+final convertFromProvider =
+    AutoDisposeNotifierProvider<ConvertFrom, String>.internal(
+      ConvertFrom.new,
+      name: r'convertFromProvider',
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$convertFromHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
+
+typedef _$ConvertFrom = AutoDisposeNotifier<String>;
+String _$convertToHash() => r'3c368274e47211c9ff6cd00e7bf7e9a9f38de4a8';
+
+/// See also [ConvertTo].
+@ProviderFor(ConvertTo)
+final convertToProvider =
+    AutoDisposeNotifierProvider<ConvertTo, String>.internal(
+      ConvertTo.new,
+      name: r'convertToProvider',
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$convertToHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
+
+typedef _$ConvertTo = AutoDisposeNotifier<String>;
+String _$resultHash() => r'4c3fc2bcc13603c232727e0ceea2e0f109752031';
 
 /// See also [Result].
 @ProviderFor(Result)
