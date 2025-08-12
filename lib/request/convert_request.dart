@@ -5,6 +5,8 @@ import 'dart:convert';
 import 'package:convertor/request/api_key.dart';
 import 'package:http/http.dart' as http;
 
+import 'dart:async';
+
 Future<String> convert_data(
   String country_one,
   String country_two,
@@ -25,6 +27,6 @@ Future<String> convert_data(
     print(data['result']);
     return data['result'].toString();
   } else {
-    return '0';
+    return convert_data(country_one, country_two, amount);
   }
 }
